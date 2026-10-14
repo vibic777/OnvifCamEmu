@@ -1,0 +1,10 @@
+test:
+  image: python:3.12
+  script:
+    - pip install -e ".[dev]"
+    - ruff check src tests
+    - pytest --junitxml=report.xml --cov=onvif_emu
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml

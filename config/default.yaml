@@ -1,0 +1,40 @@
+version: 1
+host: 0.0.0.0
+onvif_port: 8080
+discovery: true
+gui: true
+video_dir: ""
+auth:
+  mode: digest
+  username: admin
+  password: admin
+device:
+  manufacturer: Vibic
+  model: EMU-CAM-1
+  firmware: 1.0.0
+  serial: EMU00001
+  hardware_id: HW-EMU-1
+  hostname: onvif-emu
+  name: ONVIF Emulator
+  location: Lab
+  timezone: UTC
+channels:
+  - id: 1
+    name: Main
+    enabled: true
+    rtsp_path: ch1
+    source:
+      type: testsrc
+      uri: ""
+      loop: true
+    encoder:
+      codec: h264
+      width: 1280
+      height: 720
+      fps: 25
+      bitrate: 2500
+      gop: 50
+    sub:
+      enabled: true
+network:
+  rtsp_port: 8554

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ONVIF Camera Emulator</title>
+  <link rel="icon" href="/static/app.ico"/>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <!-- sign-in -->
+  <section id="login-screen" hidden>
+    <div class="login-bg"></div>
+    <form id="login-form" class="login-card" autocomplete="on">
+      <div class="login-top">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="44" height="44"><circle cx="32" cy="30" r="22" fill="none" stroke="currentColor" stroke-width="4"/>
+            <circle cx="32" cy="30" r="9" fill="currentColor"/><rect x="18" y="54" width="28" height="5" rx="2.5" fill="currentColor"/></svg>
+        </div>
+        <select class="lang" aria-label="language"><option value="ru">RU</option><option value="en">EN</option></select>
+      </div>
+      <h1 data-i18n="login.title">Вход</h1>
+      <p class="login-sub"><span data-i18n="app">ONVIF Camera Emulator</span><br/><span id="login-device"></span></p>
+      <label><span data-i18n="login.user">Пользователь</span>
+        <input id="login-user" name="username" autocomplete="username" required/></label>
+      <label><span data-i18n="login.password">Пароль</span>
+        <span class="pw-wrap"><input id="login-pass" name="password" type="password" autocomplete="current-password" required/>
+          <button type="button" id="login-eye" class="ghost" data-i18n-title="login.show">👁</button></span></label>
+      <p id="login-err" class="err" role="alert"></p>
+      <button id="login-go" class="primary big" type="submit" data-i18n="login.submit">Войти</button>
+      <p class="hint center" data-i18n="login.hint"></p>
+      <p class="hint center app-version"></p>
+    </form>
+  </section>
+
+  <!-- application -->
+  <div id="app" hidden>
+    <aside class="sidebar">
+      <div class="brand"><span class="dot"></span>ONVIF <b>EMU</b><small id="brand-model"></small></div>
+      <nav id="nav"></nav>
+      <div class="side-foot app-version"></div>
+    </aside>
+    <div class="main-col">
+      <header class="topbar">
+        <h2 class="page-title"><span id="page-ico"></span> <span id="page-title"></span></h2>
+        <div class="top-actions">
+          <select class="lang" data-i18n-title="chrome.language"><option value="ru">RU</option><option value="en">EN</option></select>
+          <button id="btn-help" class="ghost" data-i18n-title="chrome.help_title">?</button>
+          <button id="btn-save" class="primary" data-i18n="chrome.save" data-i18n-title="chrome.save_title">Сохранить</button>
+          <div id="user-box">
+            <button id="user-chip" class="chip"></button>
+            <div id="user-menu" class="menu" hidden>
+              <button id="menu-password" data-i18n="users.change_mine">Сменить пароль</button>
+              <button id="menu-log" data-i18n="chrome.log">Журнал</button>
+              <button id="menu-logout" class="danger-text" data-i18n="login.logout">Выйти</button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div id="pw-banner" class="banner" hidden>
+        <span data-i18n="users.default_pw_warning">Пароль admin по умолчанию.</span>
+        <button id="pw-banner-go" data-i18n="users.change_mine">Сменить пароль</button>
+      </div>
+      <div class="content">
+        <main id="main"></main>
+        <aside id="logpane" hidden>
+          <h3><span data-i18n="chrome.log">Журнал</span> <kbd>Ctrl+L</kbd></h3>
+          <pre id="log"></pre>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- own password -->
+  <div id="pw-dialog" class="modal" hidden>
+    <form id="pw-form" class="sheet small">
+      <h2 data-i18n="users.change_mine">Сменить пароль</h2>
+      <label><span data-i18n="users.old_pw">Текущий пароль</span><input id="pw-old" type="password" autocomplete="current-password" required/></label>
+      <label><span data-i18n="users.new_pw">Новый пароль</span><input id="pw-new" type="password" autocomplete="new-password" required/></label>
+      <label><span data-i18n="users.new_pw2">Повторите</span><input id="pw-new2" type="password" autocomplete="new-password" required/></label>
+      <p id="pw-err" class="err"></p>
+      <div class="row"><button class="primary" type="submit" data-i18n="common.save">Сохранить</button>
+        <button type="button" id="pw-cancel" data-i18n="common.cancel">Отмена</button></div>
+    </form>
+  </div>
+
+  <div id="palette" hidden>
+    <input id="palette-q" data-i18n-placeholder="chrome.palette"/>
+    <ul id="palette-list"></ul>
+  </div>
+  <div id="help-modal" class="modal" hidden>
+    <div class="sheet">
+      <header><h2 data-i18n="chrome.help_heading">Справка</h2><button id="help-close" data-i18n="chrome.esc">Esc</button></header>
+      <input id="help-search" data-i18n-placeholder="chrome.help_search"/>
+      <div id="help-body"></div>
+    </div>
+  </div>
+  <div id="toasts"></div>
+  <script src="/static/app.js"></script>
+  <script src="/static/diag.js"></script>
+</body>
+</html>

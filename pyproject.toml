@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "onvif-emulator"
+version = "1.8.2"
+description = "ONVIF Profile S camera emulator with PTZ, restreamer and stream multiplier"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "vibic777", email = "vibic@yandex.ru" }]
+license = { text = "MIT" }
+keywords = ["onvif", "camera", "emulator", "ptz", "rtsp", "odm"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "aiohttp>=3.9.0",
+  "pydantic>=2.6.0",
+  "pydantic-settings>=2.2.0",
+  "PyYAML>=6.0.1",
+  "aiofiles>=23.2.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+  "pytest-asyncio>=0.23.0",
+  "pytest-cov>=4.1.0",
+  "ruff>=0.3.0",
+]
+packaging = [
+  "pyinstaller>=6.4.0",
+]
+
+[project.scripts]
+onvif-emulator = "onvif_emu.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/vibic777/onvif-emulator"
+Documentation = "https://github.com/vibic777/onvif-emulator#readme"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+onvif_emu = [
+  "gui/static/**/*",
+  "gui/templates/**/*",
+  "locales/*.json",
+  "data/default.yaml",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q --strict-markers"
+markers = [
+  "integration: tests that may need ports/network",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = [
+  "E501",  # line length — many SOAP/XML fixtures
+  "E402",  # import after pytest_plugins in conftest
+]
+
+[tool.coverage.run]
+source = ["onvif_emu"]
+branch = true
+omit = ["src/onvif_emu/gui/static/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+

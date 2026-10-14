@@ -1,0 +1,180 @@
+version: 1
+host: 0.0.0.0
+public_host: ""
+onvif_port: 8080
+auto_port: false        # busy/reserved port -> take the next free one (CLI --auto-port)
+discovery: true
+gui: true
+snapshot: true
+multicast_stream: false
+language: ru
+state_path: ""
+config_dir_choice: beside
+video_dir: ""            # empty = video/ next to the program; CLI --video-dir / GUI System
+
+auth:
+  mode: digest          # digest | basic | wsse | none
+  username: admin
+  password: admin
+
+device:
+  manufacturer: Vibic
+  model: EMU-CAM-1
+  firmware: 1.0.0
+  serial: EMU00001
+  hardware_id: HW-EMU-1
+  hostname: onvif-emu
+  name: ONVIF Emulator
+  location: Lab
+  timezone: UTC
+  use_ntp: false
+  daylight_savings: false
+
+network:
+  http_port: 8080
+  rtsp_port: 8554
+  https_port: 8443
+  rtsp_enabled: true
+  http_enabled: true
+
+ntp:
+  enabled: false
+  servers:
+    - pool.ntp.org
+
+users:
+  - username: admin
+    password: admin
+    role: Administrator
+
+channels:
+  - id: 1
+    name: Main
+    enabled: true
+    rtsp_path: ch1
+    source:
+      type: testsrc     # file | rtsp | http | hls | dash | udp | v4l2 | x11grab | testsrc
+      uri: ""
+      loop: true
+      buffer_ms: 500
+      transcode: false
+      reconnect: true
+      reconnect_initial_s: 1.0
+      reconnect_max_s: 30.0
+    encoder:
+      codec: h264
+      width: 1280
+      height: 720
+      fps: 25
+      bitrate: 2500
+      gop: 50
+      quality: 80
+    sub:
+      enabled: true
+      codec: h264
+      width: 640
+      height: 360
+      fps: 15
+      bitrate: 512
+      gop: 30
+
+ptz:
+  pan_min: -180
+  pan_max: 180
+  tilt_min: -90
+  tilt_max: 90
+  zoom_min: 0
+  zoom_max: 1
+  pan_speed: 30
+  tilt_speed: 20
+  zoom_speed: 0.25
+  iris_min: 0
+  iris_max: 1
+  focus_min: 0
+  focus_max: 1
+  automove: false
+  flip: false
+  tours_enabled: false
+
+imaging:
+  brightness: 50
+  contrast: 50
+  saturation: 50
+  sharpness: 50
+  backlight: false
+  backlight_level: 50
+  white_balance: auto
+  wb_cr: 50
+  wb_cb: 50
+  exposure_mode: auto
+  iris: 0.5
+  focus_mode: auto
+  focus: 0.5
+
+osd:
+  enabled: true
+  preset: default
+  style:
+    color: "#00FF88"
+    opacity: 0.85
+    size: 28
+    position: top-left
+    font: sans
+    duration_ms: 1500
+    show_text_status: true
+    show_arrows: true
+    show_zoom: true
+    show_iris: true
+    show_focus: true
+    show_events: true
+
+events:
+  mode: timer           # timer | motion | manual
+  motion_interval: 15
+  tamper_interval: 60
+  analytics_interval: 20
+  digital_input: false
+  randomize: true
+  hold_s: 3
+
+analytics:
+  enabled: true
+  mode: simulator       # simulator | external
+  motion_module: true
+  line_cross_module: true
+  field_detector_module: true
+  object_classes: [Person, Vehicle, Animal, Unknown]
+  max_objects: 4
+  box_speed: 0.08
+
+logging:
+  levels: [CRITICAL]
+  level: CRITICAL
+  file: ""
+  dir: ""
+  console: true         # mirror enabled levels to the console (CLI --log-console)
+  max_mb: 5             # rotate the log file at this size (CLI --log-max-mb)
+  backups: 3            # rotated files kept (CLI --log-backups)
+
+mediamtx:
+  embedded: true
+  binary: ""
+  publish_host: "127.0.0.1"
+  webrtc: true
+  hls: true
+  api: true
+  api_port: 9997
+  hls_port: 8888
+  webrtc_port: 8889
+
+ffmpeg:
+  binary: ffmpeg
+  ffprobe: ffprobe
+  extra_args: []
+
+scopes:
+  - onvif://www.onvif.org/Profile/Streaming
+  - onvif://www.onvif.org/hardware/EMU-CAM-1
+  - onvif://www.onvif.org/name/ONVIF_Emulator
+  - onvif://www.onvif.org/location/Lab
+  - onvif://www.onvif.org/type/ptz
