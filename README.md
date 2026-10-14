@@ -1,8 +1,8 @@
 # ONVIF Camera Emulator
 [Русский](#русский) · [English](#english)
 
-**GitHub About / English:** Test ONVIF clients with an emulated Profile S IP camera: SOAP, WS-Discovery, PTZ, OSD, events, analytics, and video streaming.
-**Описание GitHub / Русский:** Проверяйте ONVIF-клиенты на эмуляторе IP-камеры Profile S: SOAP, WS-Discovery, PTZ, OSD, события, аналитика и видеопоток.
+**GitHub About / English:** An ONVIF camera emulator for checking recorders and debugging metadata integration. Built from years of security-systems practice, because a complete diagnostic tool was not there.
+**Описание GitHub / Русский:** Эмулятор ONVIF-камеры для проверки видеорегистраторов и отладки интеграции метаданных. Сделан из практики систем безопасности: полноценного инструмента диагностики не нашлось.
 
 Эмулятор IP-камеры **ONVIF Profile S** (части T/G): SOAP, WS-Discovery, PTZ, OSD, события, аналитика, рестример. Целевой клиент — [ONVIF Device Manager](https://sourceforge.net/projects/onvifdm/).
 
@@ -13,6 +13,10 @@ Author: **vibic777** `<vibic@yandex.ru>` · version **1.8.2** · license [MIT](L
 <a id="русский"></a>
 
 ## Русский
+
+### Откуда
+
+Семнадцать лет как интегратор комплексов охраны и ещё два с половиной — в разработке интеграционной системы. Это лишь часть той практики, но как раз та, которой не хватало инструмента: проверить видеорегистратор и отладить интеграцию метаданных было не на чем. Полноценного эмулятора ONVIF не нашлось, поэтому появился свой. Инструмент диагностики и интеграции, оставленный открытым — для тех, кому он нужен в работе.
 
 ### Что это
 
@@ -202,6 +206,8 @@ python -m pytest
 <a id="english"></a>
 
 ## English
+
+Seventeen years integrating physical-security systems, and another two and a half building an integration platform. This is one piece of that work, and a necessary one: there was no complete ONVIF emulator for checking recorders and debugging metadata. So this tool exists. It is a diagnostic and integration instrument, published for anyone who needs it on the job.
 
 ONVIF **Profile S** IP-camera emulator (with T/G bits): SOAP services, WS-Discovery, live PTZ, OSD, events, analytics, restreamer and channel multiplier. Target client: [ONVIF Device Manager](https://sourceforge.net/projects/onvifdm/).
 
