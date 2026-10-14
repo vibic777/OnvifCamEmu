@@ -4,6 +4,10 @@
 **GitHub About / English:** An ONVIF camera emulator for checking recorders and debugging metadata integration. Built from years of security-systems practice, because a complete diagnostic tool was not there.
 **Описание GitHub / Русский:** Эмулятор ONVIF-камеры для проверки видеорегистраторов и отладки интеграции метаданных. Сделан из практики систем безопасности: полноценного инструмента диагностики не нашлось.
 
+**Лицензия:** [PolyForm Noncommercial 1.0.0](LICENSE). Некоммерческое использование разрешено. Коммерческое использование — только по отдельному соглашению с vibic777.
+**License:** [PolyForm Noncommercial 1.0.0](LICENSE). Noncommercial use is allowed. Commercial use requires a separate agreement with vibic777.
+
+
 Эмулятор IP-камеры **ONVIF Profile S** (части T/G): SOAP, WS-Discovery, PTZ, OSD, события, аналитика, рестример. Целевой клиент — [ONVIF Device Manager](https://sourceforge.net/projects/onvifdm/).
 
 Author: **vibic777** `<vibic@yandex.ru>` · version **1.8.2** · license [MIT](LICENSE)
