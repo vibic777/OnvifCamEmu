@@ -1,0 +1,63 @@
+services:
+  onvif-emulator:
+    container_name: OnvifCamEmu
+    image: vibic777/onvif-emulator:${IMAGE_TAG:-1.8.2}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PYTHON_IMAGE: ${PYTHON_IMAGE:-python:3.12-slim}
+        MEDIAMTX_IMAGE: ${MEDIAMTX_IMAGE:-bluenviron/mediamtx:1.20.1}
+        APP_UID: ${PUID:-1000}
+        APP_GID: ${PGID:-1000}
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 45s
+    user: "${PUID:-1000}:${PGID:-1000}"
+    env_file:
+      - .env.docker
+    environment:
+      ONVIF_EMU_HOST: 0.0.0.0
+      ONVIF_EMU_ONVIF_PORT: ${ONVIF_PORT:-8080}
+      ONVIF_EMU_PUBLIC_HOST: ${PUBLIC_HOST:-}
+      ONVIF_EMU_NETWORK__RTSP_PORT: ${RTSP_PORT:-8554}
+      ONVIF_EMU_NETWORK__HTTP_PORT: ${ONVIF_PORT:-8080}
+      ONVIF_EMU_MEDIAMTX__EMBEDDED: "true"
+      ONVIF_EMU_MEDIAMTX__BINARY: /usr/local/bin/mediamtx
+      ONVIF_EMU_MEDIAMTX__PUBLISH_HOST: 127.0.0.1
+      ONVIF_EMU_MEDIAMTX__API_PORT: ${MEDIAMTX_API_PORT:-9997}
+      ONVIF_EMU_MEDIAMTX__HLS_PORT: ${HLS_PORT:-8888}
+      ONVIF_EMU_MEDIAMTX__WEBRTC_PORT: ${WEBRTC_PORT:-8889}
+      ONVIF_EMU_STATE_PATH: /app/data/state.json
+      ONVIF_EMU_VIDEO_DIR: /app/video
+      ONVIF_EMU_LOGGING__DIR: /app/data/logs
+      ONVIF_EMU_AUTH__PASSWORD: ${ONVIF_EMU_AUTH__PASSWORD:?Set ONVIF_EMU_AUTH__PASSWORD in .env.docker}
+    volumes:
+      - type: bind
+        source: ${CONFIG_HOST_DIR:-./config}
+        target: /app/config
+      - type: bind
+        source: ${DATA_HOST_DIR:-./data}
+        target: /app/data
+      - type: bind
+        source: ${VIDEO_HOST_DIR:-./video}
+        target: /app/video
+      - type: bind
+        source: ${MEDIA_HOST_DIR:-./media}
+        target: /media
+        read_only: true
+    ports:
+      - "${BIND_ADDRESS:-0.0.0.0}:${ONVIF_PORT:-8080}:${ONVIF_PORT:-8080}/tcp"
+      - "${BIND_ADDRESS:-0.0.0.0}:${RTSP_PORT:-8554}:${RTSP_PORT:-8554}/tcp"
+      - "${BIND_ADDRESS:-0.0.0.0}:${ONVIF_DISCOVERY_PORT:-3702}:3702/udp"
+      - "${BIND_ADDRESS:-0.0.0.0}:${HLS_PORT:-8888}:${HLS_PORT:-8888}/tcp"
+      - "${BIND_ADDRESS:-0.0.0.0}:${WEBRTC_PORT:-8889}:${WEBRTC_PORT:-8889}/tcp"
+      - "${BIND_ADDRESS:-0.0.0.0}:${RTSP_RTP_UDP_PORT:-8000}:8000/udp"
+      - "${BIND_ADDRESS:-0.0.0.0}:${RTSP_RTCP_UDP_PORT:-8001}:8001/udp"
+      - "${BIND_ADDRESS:-0.0.0.0}:${WEBRTC_UDP_PORT:-8189}:8189/udp"
+    command:
+      - --service
+      - --config
+      - /app/config/${CONFIG_FILE:-default.yaml}
+      - --host
+      - 0.0.0.0

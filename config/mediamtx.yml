@@ -1,0 +1,11 @@
+logLevel: info
+api: yes
+apiAddress: :9997
+rtspAddress: :8554
+hls: yes
+hlsAddress: :8888
+webrtc: yes
+webrtcAddress: :8889
+paths:
+  all_others:
+    source: publisher

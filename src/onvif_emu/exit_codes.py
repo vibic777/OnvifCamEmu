@@ -1,0 +1,8 @@
+"""Process exit codes for CLI."""
+
+OK = 0
+CONFIG_ERROR = 1
+PORT_IN_USE = 2
+MISSING_DEPENDENCY = 3
+RUNTIME_ERROR = 4
+USAGE_ERROR = 5
